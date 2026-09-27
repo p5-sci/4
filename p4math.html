@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P4 Algebra · Uganda · Step-by-Step Writing</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI','Poppins',system-ui,sans-serif; }
+
+  body {
+    min-height:100vh;
+    background: linear-gradient(145deg,#f9e6d4 0%,#ffe0b5 100%);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:1.5rem; position:relative; overflow-x:hidden;
+  }
+
+  /* floating math symbols */
+  .floating-symbols {
+    position:absolute; top:0; left:0; width:100%; height:100%;
+    pointer-events:none; z-index:0; overflow:hidden;
+  }
+  .floating-symbols span {
+    position:absolute; font-size:2.2rem; font-weight:600;
+    color:rgba(255,215,140,0.5);
+    animation: floatSymbol 12s infinite linear;
+    user-select:none; white-space:nowrap;
+  }
+  @keyframes floatSymbol {
+    0%   { transform: translateY(110vh) rotate(0deg); opacity:0.3; }
+    20%  { opacity:0.7; }
+    80%  { opacity:0.7; }
+    100% { transform: translateY(-20vh) rotate(360deg); opacity:0; }
+  }
+
+  .card {
+    background: rgba(255,255,255,0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 3rem 1rem 3rem 1rem;
+    box-shadow: 0 25px 40px -10px rgba(0,0,0,0.25),
+                0 0 0 2px #fff8e7 inset,
+                0 0 0 4px #ffcf9c inset;
+    padding: 2rem;
+    max-width: 900px; width:100%;
+    position:relative; z-index:10;
+    animation: cardPop 0.8s cubic-bezier(0.2,0.9,0.3,1.2);
+  }
+  @keyframes cardPop {
+    0%   { transform: scale(0.9); opacity:0; }
+    100% { transform: scale(1);   opacity:1; }
+  }
+
+  h1 {
+    font-size:2.3rem; font-weight:700; color:#4b2e1b; text-align:center;
+    display:flex; align-items:center; justify-content:center; gap:12px;
+    margin-bottom:0.35rem;
+  }
+  h1 span {
+    background:#f7b05e; color:#2d1b0c; font-size:1.4rem;
+    padding:0.2rem 1rem; border-radius:60px;
+    box-shadow:0 4px 0 #9b6a3b;
+  }
+  .subhead {
+    text-align:center; font-weight:500; color:#7b5e3f;
+    margin-bottom:2rem; border-bottom:2px dashed #e6c8a6;
+    padding-bottom:1rem; font-size:1.05rem;
+  }
+
+  .questions { display:flex; flex-direction:column; gap:2rem; }
+
+  .q-item {
+    background:white; border-radius:28px; padding:1.5rem 1.8rem;
+    box-shadow: 0 8px 0 #cb9e6e, 0 12px 20px -8px rgba(0,0,0,0.2);
+    border:1px solid #ffdbb5;
+    animation: slideIn 0.6s ease backwards;
+  }
+  .q-item:nth-child(1) { animation-delay:0.05s; }
+  .q-item:nth-child(2) { animation-delay:0.15s; }
+  .q-item:nth-child(3) { animation-delay:0.25s; }
+  @keyframes slideIn {
+    from { opacity:0; transform: translateX(-30px); }
+    to   { opacity:1; transform: translateX(0); }
+  }
+
+  .question-text {
+    font-size:1.4rem; font-weight:600; color:#3b2a19;
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    margin-bottom:0.8rem;
+  }
+  .q-badge {
+    background:#f7b05e; color:#2d1b0c; font-size:0.95rem;
+    padding:0.3rem 0.9rem; border-radius:40px; font-weight:700;
+    box-shadow:0 2px 0 #9e6f3e;
+  }
+
+  /* the step area – this is where handwriting happens */
+  .steps-area {
+    background:#fefaf2;
+    border:2px dashed #d4b48b;
+    border-radius:18px;
+    padding:1rem 1.3rem;
+    min-height:3rem;
+    font-family:'Courier New','Fira Code',monospace;
+    font-size:1.35rem;
+    font-weight:600;
+    color:#2b4a2b;
+    line-height:1.9;
+    white-space:pre-wrap;
+    word-break:break-word;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.04);
+    transition: border-color 0.25s, box-shadow 0.25s;
+    position:relative;
+  }
+  .steps-area.typing-active {
+    border-color:#f7b05e;
+    background:#fffdf8;
+    box-shadow: 0 0 0 3px rgba(247,176,94,0.3);
+  }
+
+  /* each line inside steps area */
+  .step-line { display:block; }
+  .step-reason {
+    display:block;
+    font-size:0.95rem;
+    font-family:'Segoe UI',sans-serif;
+    font-weight:500;
+    font-style:italic;
+    color:#a7703a;
+    margin: 0.1rem 0 0.5rem 1.2rem;
+    line-height:1.3;
+  }
+
+  /* cursor */
+  .cursor-blink {
+    display:inline-block; width:3px; height:1.5rem;
+    background:#333; margin-left:2px;
+    vertical-align:middle;
+    animation: blink 0.8s infinite;
+  }
+  @keyframes blink {
+    0%,100% { opacity:1; }
+    50%     { opacity:0; }
+  }
+
+  .answer-area {
+    margin-top:0.9rem;
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  }
+  .btn-solve {
+    background:#f7b05e; border:none;
+    padding:0.6rem 1.8rem; border-radius:60px;
+    font-weight:700; font-size:1.1rem; color:#2d1b0c;
+    box-shadow:0 5px 0 #a56e33, 0 6px 12px rgba(0,0,0,0.15);
+    cursor:pointer; transition:all 0.1s ease;
+    display:inline-flex; align-items:center; gap:8px;
+    border:1px solid #ffeacb;
+  }
+  .btn-solve:active {
+    transform: translateY(3px);
+    box-shadow:0 2px 0 #a56e33, 0 6px 12px rgba(0,0,0,0.1);
+  }
+  .btn-solve:disabled {
+    opacity:0.65; transform:translateY(2px);
+    box-shadow:0 3px 0 #7b552e;
+    cursor:not-allowed; background:#e7c191;
+  }
+
+  .feedback {
+    font-size:0.9rem; color:#a7703a; font-weight:600;
+  }
+
+  .reset-area { display:flex; justify-content:center; margin-top:2rem; }
+  .btn-reset {
+    background:#e7d6c0; border:none;
+    padding:0.7rem 2rem; border-radius:60px;
+    font-weight:600; font-size:1.05rem; color:#4e3b28;
+    box-shadow:0 4px 0 #b19473; cursor:pointer;
+    transition:all 0.1s; display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-reset:active { transform: translateY(3px); box-shadow:0 1px 0 #b19473; }
+
+  @media (max-width:580px) {
+    .card { padding:1.3rem; }
+    h1 { font-size:1.8rem; flex-wrap:wrap; }
+    .question-text { font-size:1.15rem; }
+    .steps-area { font-size:1.1rem; padding:0.8rem; }
+    .step-reason { font-size:0.8rem; margin-left:0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="floating-symbols">
+  <span style="left:5%;  animation-duration:14s;">+</span>
+  <span style="left:18%; animation-duration:18s; animation-delay:2s;">=</span>
+  <span style="left:32%; animation-duration:11s; animation-delay:1s;">x</span>
+  <span style="left:48%; animation-duration:16s; animation-delay:4s;">−</span>
+  <span style="left:63%; animation-duration:13s; animation-delay:0.5s;">y</span>
+  <span style="left:77%; animation-duration:19s; animation-delay:3s;">=</span>
+  <span style="left:89%; animation-duration:15s; animation-delay:5s;">+</span>
+  <span style="left:42%; animation-duration:17s; animation-delay:6s;">a</span>
+  <span style="left:70%; animation-duration:12s; animation-delay:2.5s;">7</span>
+  <span style="left:10%; animation-duration:20s; animation-delay:7s;">?</span>
+</div>
+
+<div class="card">
+  <h1>✏️ P4 Algebra <span>Uganda</span></h1>
+  <div class="subhead">📘 Primary Four · Step-by-step solutions with reasons</div>
+
+  <div class="questions" id="questionsContainer">
+
+    <!-- Q1: x + 3 = 7 -->
+    <div class="q-item" data-index="0">
+      <div class="question-text">
+        <span class="q-badge">Q1</span> If &nbsp;x + 3 = 7, &nbsp;find x.
+      </div>
+      <div class="steps-area" id="stepsBox0"></div>
+      <div class="answer-area">
+        <button class="btn-solve" data-index="0" id="solveBtn0">✍️ Solve step by step</button>
+        <span class="feedback" id="feedback0"></span>
+      </div>
+    </div>
+
+    <!-- Q2: y − 4 = 10 -->
+    <div class="q-item" data-index="1">
+      <div class="question-text">
+        <span class="q-badge">Q2</span> If &nbsp;y − 4 = 10, &nbsp;find y.
+      </div>
+      <div class="steps-area" id="stepsBox1"></div>
+      <div class="answer-area">
+        <button class="btn-solve" data-index="1" id="solveBtn1">✍️ Solve step by step</button>
+        <span class="feedback" id="feedback1"></span>
+      </div>
+    </div>
+
+    <!-- Q3: 2 × m = 12 -->
+    <div class="q-item" data-index="2">
+      <div class="question-text">
+        <span class="q-badge">Q3</span> If &nbsp;2 × m = 12, &nbsp;find m.
+      </div>
+      <div class="steps-area" id="stepsBox2"></div>
+      <div class="answer-area">
+        <button class="btn-solve" data-index="2" id="solveBtn2">✍️ Solve step by step</button>
+        <span class="feedback" id="feedback2"></span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="reset-area">
+    <button class="btn-reset" id="resetAllBtn">🔄 Reset all</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  // ---------- STEP DEFINITIONS ----------
+  // Each question has an array of "blocks".
+  // A block = { text: "...", reason: "..." (optional) }
+  // The engine will type the text character-by-character, then
+  // (if a reason exists) type the reason in italics underneath.
+  const questionSteps = {
+    0: [ // x + 3 = 7
+      { text: "x + 3 = 7" },
+      { text: "x + 3 − 3 = 7 − 3", reason: "Subtract 3 from both sides to remove the +3 next to x." },
+      { text: "x = 4",            reason: "Simplify: 3−3=0 and 7−3=4." }
+    ],
+    1: [ // y − 4 = 10
+      { text: "y − 4 = 10" },
+      { text: "y − 4 + 4 = 10 + 4", reason: "Add 4 to both sides to remove the −4 next to y." },
+      { text: "y = 14",              reason: "Simplify: −4+4=0 and 10+4=14." }
+    ],
+    2: [ // 2 × m = 12
+      { text: "2 × m = 12" },
+      { text: "2 × m ÷ 2 = 12 ÷ 2", reason: "Divide both sides by 2 to get m alone (since 2 is multiplying m)." },
+      { text: "m = 6",                reason: "Simplify: 2÷2=1 and 12÷2=6, so m = 6." }
+    ]
+  };
+
+  // State for each question
+  const state = {
+    0: { isTyping:false, blockIndex:0, charIndex:0, reasonCharIndex:0,
+         phase:'idle', timer:null, done:false },
+    1: { isTyping:false, blockIndex:0, charIndex:0, reasonCharIndex:0,
+         phase:'idle', timer:null, done:false },
+    2: { isTyping:false, blockIndex:0, charIndex:0, reasonCharIndex:0,
+         phase:'idle', timer:null, done:false }
+  };
+
+  const boxes      = [document.getElementById('stepsBox0'),
+                      document.getElementById('stepsBox1'),
+                      document.getElementById('stepsBox2')];
+  const buttons    = [document.getElementById('solveBtn0'),
+                      document.getElementById('solveBtn1'),
+                      document.getElementById('solveBtn2')];
+  const feedbacks  = [document.getElementById('feedback0'),
+                      document.getElementById('feedback1'),
+                      document.getElementById('feedback2')];
+
+  const TYPE_SPEED = 55;          // ms per character for main text
+  const REASON_SPEED = 30;        // ms per character for reason
+  const PAUSE_BETWEEN = 500;      // pause after finishing a block before next
+
+  // ---------- HELPER: create cursor ----------
+  function makeCursor() {
+    const c = document.createElement('span');
+    c.className = 'cursor-blink';
+    return c;
+  }
+
+  // ---------- STOP / RESET a single question ----------
+  function stopQuestion(idx) {
+    const s = state[idx];
+    if (s.timer) { clearTimeout(s.timer); s.timer = null; }
+    s.isTyping = false;
+    s.blockIndex = 0;
+    s.charIndex = 0;
+    s.reasonCharIndex = 0;
+    s.phase = 'idle';
+    s.done = false;
+    boxes[idx].innerHTML = '';
+    boxes[idx].classList.remove('typing-active');
+  }
+
+  // ---------- RENDER current state of a box ----------
+  // Rebuilds innerHTML from scratch based on blockIndex, charIndex, reasonCharIndex
+  function renderBox(idx) {
+    const s = state[idx];
+    const steps = questionSteps[idx];
+    const box = boxes[idx];
+    const cursor = makeCursor();
+
+    let html = '';
+
+    // Render all FULLY completed blocks (before current blockIndex)
+    for (let b = 0; b < s.blockIndex; b++) {
+      const blk = steps[b];
+      html += `<span class="step-line">${escapeHtml(blk.text)}</span>`;
+      if (blk.reason) {
+        html += `<span class="step-reason">${escapeHtml(blk.reason)}</span>`;
+      }
+    }
+
+    // Current block (partially typed)
+    if (s.blockIndex < steps.length) {
+      const blk = steps[s.blockIndex];
+      const typedText = blk.text.substring(0, s.charIndex);
+
+      // Main text line
+      html += `<span class="step-line">${escapeHtml(typedText)}</span>`;
+
+      // If main text is fully typed AND there is a reason, show reason progress
+      if (s.charIndex >= blk.text.length) {
+        if (blk.reason && s.reasonCharIndex >= 0) {
+          const typedReason = blk.reason.substring(0, s.reasonCharIndex);
+          html += `<span class="step-reason">${escapeHtml(typedReason)}</span>`;
+        }
+      }
+    }
+
+    box.innerHTML = html;
+
+    // Append cursor at the very end (inside the last active element)
+    // We'll just append it to box; visually it appears after the last text.
+    box.appendChild(cursor);
+
+    // If the box is empty and we haven't started, maybe no cursor? But we want cursor when typing.
+    if (!s.isTyping && !s.done) {
+      // idle, but cursor can still blink softly
+    }
+  }
+
+  // simple escape for < > etc (our text is safe but good practice)
+  function escapeHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  // ---------- MAIN TYPING ENGINE ----------
+  function step(idx) {
+    const s = state[idx];
+    const steps = questionSteps[idx];
+    const box = boxes[idx];
+
+    // If we've finished all blocks
+    if (s.blockIndex >= steps.length) {
+      // Done!
+      s.isTyping = false;
+      s.done = true;
+      s.phase = 'idle';
+      box.classList.remove('typing-active');
+      // remove cursor
+      const cur = box.querySelector('.cursor-blink');
+      if (cur) cur.remove();
+      feedbacks[idx].textContent = '✅ Solved!';
+      buttons[idx].disabled = true;
+      return;
+    }
+
+    const blk = steps[s.blockIndex];
+
+    // ---- PHASE 1: typing main text ----
+    if (s.phase === 'typingText' || s.phase === 'idle') {
+      s.phase = 'typingText';
+      box.classList.add('typing-active');
+
+      if (s.charIndex < blk.text.length) {
+        s.charIndex++;
+        renderBox(idx);
+        s.timer = setTimeout(() => step(idx), TYPE_SPEED);
+        return;
+      } else {
+        // main text fully typed; if there's a reason, move to typing reason
+        if (blk.reason) {
+          s.phase = 'typingReason';
+          s.reasonCharIndex = 0;
+          renderBox(idx);
+          s.timer = setTimeout(() => step(idx), REASON_SPEED);
+          return;
+        } else {
+          // no reason: finish this block
+          s.blockIndex++;
+          s.charIndex = 0;
+          s.reasonCharIndex = 0;
+          s.phase = 'pause';
+          renderBox(idx);
+          s.timer = setTimeout(() => step(idx), PAUSE_BETWEEN);
+          return;
+        }
+      }
+    }
+
+    // ---- PHASE 2: typing reason ----
+    if (s.phase === 'typingReason') {
+      box.classList.add('typing-active');
+      if (s.reasonCharIndex < blk.reason.length) {
+        s.reasonCharIndex++;
+        renderBox(idx);
+        s.timer = setTimeout(() => step(idx), REASON_SPEED);
+        return;
+      } else {
+        // reason fully typed; move to next block
+        s.blockIndex++;
+        s.charIndex = 0;
+        s.reasonCharIndex = 0;
+        s.phase = 'pause';
+        renderBox(idx);
+        s.timer = setTimeout(() => step(idx), PAUSE_BETWEEN);
+        return;
+      }
+    }
+
+    // ---- PHASE 3: pause between blocks ----
+    if (s.phase === 'pause') {
+      s.phase = 'typingText'; // ready for next block
+      // If we just finished the last block, step() at top will detect it.
+      step(idx);
+      return;
+    }
+  }
+
+  // ---------- START SOLVING a question ----------
+  function startSolve(idx) {
+    const s = state[idx];
+    // If already typing, ignore
+    if (s.isTyping) return;
+    // If already done, ignore (button disabled anyway)
+    if (s.done) return;
+
+    // Reset this question cleanly
+    stopQuestion(idx);
+
+    // Initialize typing state
+    s.isTyping = true;
+    s.blockIndex = 0;
+    s.charIndex = 0;
+    s.reasonCharIndex = 0;
+    s.phase = 'typingText';
+    s.done = false;
+
+    // Disable button
+    buttons[idx].disabled = true;
+    feedbacks[idx].textContent = '✍️ writing...';
+    boxes[idx].classList.add('typing-active');
+
+    // Clear box
+    boxes[idx].innerHTML = '';
+
+    // Start the engine
+    step(idx);
+  }
+
+  // ---------- RESET single question ----------
+  function resetQuestion(idx) {
+    stopQuestion(idx);
+    boxes[idx].innerHTML = '';
+    boxes[idx].classList.remove('typing-active');
+    feedbacks[idx].textContent = '';
+    buttons[idx].disabled = false;
+  }
+
+  // ---------- RESET all ----------
+  function resetAll() {
+    for (let i = 0; i < 3; i++) resetQuestion(i);
+  }
+
+  // ---------- EVENT LISTENERS ----------
+  buttons.forEach((btn, idx) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      startSolve(idx);
+    });
+  });
+
+  document.getElementById('resetAllBtn').addEventListener('click', (e) => {
+    e.preventDefault();
+    resetAll();
+  });
+
+  // Initialise on load
+  window.addEventListener('load', () => {
+    for (let i = 0; i < 3; i++) resetQuestion(i);
+  });
+
+})();
+</script>
+</body>
+</html>
